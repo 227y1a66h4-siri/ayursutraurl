@@ -5,8 +5,10 @@ import { useAuth } from '@/context/AuthContext';
 import { mockAppointments, mockPatients, mockTherapists, mockInvoices } from '@/data/mockData';
 import { Users, Calendar, IndianRupee, UserCheck, Clock } from 'lucide-react';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const today = new Date();
   
@@ -108,19 +110,28 @@ export default function Dashboard() {
               Quick Actions
             </h2>
             <div className="space-y-3">
-              <button className="w-full text-left px-4 py-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors group">
+              <button 
+                onClick={() => navigate('/patients?action=new')}
+                className="w-full text-left px-4 py-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors group"
+              >
                 <p className="font-medium text-foreground group-hover:text-primary transition-colors">
                   Register New Patient
                 </p>
                 <p className="text-sm text-muted-foreground">Add patient details and history</p>
               </button>
-              <button className="w-full text-left px-4 py-3 rounded-lg bg-secondary/10 hover:bg-secondary/20 transition-colors group">
+              <button 
+                onClick={() => navigate('/appointments?action=new')}
+                className="w-full text-left px-4 py-3 rounded-lg bg-secondary/10 hover:bg-secondary/20 transition-colors group"
+              >
                 <p className="font-medium text-foreground group-hover:text-secondary transition-colors">
                   Schedule Appointment
                 </p>
                 <p className="text-sm text-muted-foreground">Book a therapy session</p>
               </button>
-              <button className="w-full text-left px-4 py-3 rounded-lg bg-accent/10 hover:bg-accent/20 transition-colors group">
+              <button 
+                onClick={() => navigate('/billing?action=new')}
+                className="w-full text-left px-4 py-3 rounded-lg bg-accent/10 hover:bg-accent/20 transition-colors group"
+              >
                 <p className="font-medium text-foreground group-hover:text-accent transition-colors">
                   Create Invoice
                 </p>

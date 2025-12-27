@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,10 +26,18 @@ import {
 import { useToast } from '@/hooks/use-toast';
 
 export default function Patients() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [patients, setPatients] = useState<Patient[]>(mockPatients);
   const [searchQuery, setSearchQuery] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (searchParams.get('action') === 'new') {
+      setIsDialogOpen(true);
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const [newPatient, setNewPatient] = useState({
     name: '',

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { mockInvoices, mockPatients, mockAppointments, mockTherapies } from '@/data/mockData';
@@ -31,10 +32,18 @@ const statusColors = {
 };
 
 export default function Billing() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [invoices, setInvoices] = useState<Invoice[]>(mockInvoices);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (searchParams.get('action') === 'new') {
+      setIsDialogOpen(true);
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const [newInvoice, setNewInvoice] = useState({
     patientId: '',
