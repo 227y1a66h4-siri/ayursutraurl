@@ -1,73 +1,112 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ArrowRight, Droplets, Wind, Leaf, Brain, Heart } from 'lucide-react';
 
 const treatments = [
   {
-    emoji: '🌿',
+    icon: Wind,
     name: 'Vamana',
-    description: 'Therapeutic emesis to eliminate excess Kapha dosha, treating respiratory and digestive disorders naturally.',
+    subtitle: 'Therapeutic Emesis',
+    description: 'Gentle cleansing of Kapha dosha through therapeutic emesis. Ideal for respiratory conditions, allergies, and skin disorders.',
+    benefits: ['Clears respiratory tract', 'Improves digestion', 'Enhances skin health'],
   },
   {
-    emoji: '💧',
+    icon: Droplets,
     name: 'Virechana',
-    description: 'Controlled purgation therapy to cleanse Pitta dosha, addressing liver disorders and skin conditions.',
+    subtitle: 'Purgation Therapy',
+    description: 'Controlled purgation to eliminate excess Pitta dosha. Effective for liver disorders, skin conditions, and digestive issues.',
+    benefits: ['Detoxifies liver', 'Clears skin', 'Balances metabolism'],
   },
   {
-    emoji: '🏺',
+    icon: Leaf,
     name: 'Basti',
-    description: 'Medicated enema therapy to balance Vata dosha, treating neurological and joint disorders effectively.',
+    subtitle: 'Medicated Enema',
+    description: 'The most powerful Panchakarma treatment for Vata disorders. Addresses neurological conditions and joint problems.',
+    benefits: ['Relieves joint pain', 'Calms nervous system', 'Improves mobility'],
   },
   {
-    emoji: '👃',
+    icon: Brain,
     name: 'Nasya',
-    description: 'Nasal administration of medicines to treat head and neck disorders, enhancing mental clarity.',
+    subtitle: 'Nasal Administration',
+    description: 'Therapeutic nasal drops to cleanse and strengthen the head region. Enhances mental clarity and sensory functions.',
+    benefits: ['Mental clarity', 'Sinus relief', 'Better sleep'],
   },
   {
-    emoji: '🩸',
+    icon: Heart,
     name: 'Raktamokshana',
-    description: 'Bloodletting therapy to purify blood and treat skin diseases, hypertension, and inflammatory conditions.',
+    subtitle: 'Blood Purification',
+    description: 'Specialized blood purification therapy for inflammatory conditions, skin diseases, and toxin removal.',
+    benefits: ['Purifies blood', 'Reduces inflammation', 'Clears toxins'],
   },
 ];
 
 const TreatmentsSection = () => {
   return (
-    <section id="treatments" className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            The Healing Art of Panchakarma
+    <section id="treatments" className="section-padding bg-background relative overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-muted/50 to-transparent pointer-events-none" />
+      
+      <div className="container mx-auto px-6 relative">
+        {/* Header */}
+        <div className="max-w-2xl mb-16">
+          <span className="text-sm font-medium text-primary uppercase tracking-wider mb-4 block">Our Therapies</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6">
+            The Five Pillars of Panchakarma
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover the five sacred cleansing therapies that have restored balance and vitality for thousands of years
+          <p className="text-lg text-muted-foreground">
+            Ancient purification therapies refined over millennia, now available with modern comfort and personalized care.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* Treatments Grid */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-12">
           {treatments.map((treatment, index) => (
-            <Card
+            <div
               key={treatment.name}
-              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 bg-card animate-slide-up"
+              className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardContent className="p-6 text-center">
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {treatment.emoji}
+              <div className="flex items-start gap-6">
+                {/* Icon */}
+                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <treatment.icon className="h-7 w-7 text-primary" />
                 </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                  {treatment.name}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {treatment.description}
-                </p>
-              </CardContent>
-            </Card>
+                
+                {/* Content */}
+                <div className="flex-1">
+                  <div className="mb-3">
+                    <h3 className="font-display text-2xl font-semibold text-foreground mb-1">
+                      {treatment.name}
+                    </h3>
+                    <span className="text-sm text-primary font-medium">{treatment.subtitle}</span>
+                  </div>
+                  
+                  <p className="text-muted-foreground mb-4">
+                    {treatment.description}
+                  </p>
+                  
+                  {/* Benefits */}
+                  <div className="flex flex-wrap gap-2">
+                    {treatment.benefits.map((benefit) => (
+                      <span
+                        key={benefit}
+                        className="text-xs px-3 py-1 rounded-full bg-secondary/10 text-secondary font-medium"
+                      >
+                        {benefit}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        {/* CTA */}
+        <div className="text-center">
           <a href="#contact">
-            <Button size="lg" className="gradient-primary text-primary-foreground">
-              Start Your Healing Journey
+            <Button size="lg" className="gradient-primary text-primary-foreground rounded-full px-8 group">
+              Schedule Your Assessment
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </a>
         </div>

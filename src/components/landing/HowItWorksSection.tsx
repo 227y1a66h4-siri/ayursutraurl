@@ -1,62 +1,85 @@
+import { ClipboardCheck, Stethoscope, Sparkles, TrendingUp } from 'lucide-react';
+
 const steps = [
   {
-    number: '1',
-    title: 'Register',
-    description: 'Complete your health profile and treatment preferences',
+    icon: ClipboardCheck,
+    step: '01',
+    title: 'Initial Consultation',
+    description: 'Book a comprehensive consultation where our experts analyze your Prakriti (constitution), Vikriti (imbalances), and health history.',
   },
   {
-    number: '2',
-    title: 'Consultation',
-    description: 'Meet with our expert practitioners for personalized assessment',
+    icon: Stethoscope,
+    step: '02',
+    title: 'Personalized Plan',
+    description: 'Receive a customized Panchakarma protocol designed specifically for your body type, health goals, and lifestyle.',
   },
   {
-    number: '3',
-    title: 'Treatment',
-    description: 'Begin your customized Panchakarma therapy program',
+    icon: Sparkles,
+    step: '03',
+    title: 'Treatment Journey',
+    description: 'Experience authentic therapies in our serene healing environment with continuous care from our expert team.',
   },
   {
-    number: '4',
-    title: 'Track Progress',
-    description: 'Monitor your wellness journey with detailed analytics',
+    icon: TrendingUp,
+    step: '04',
+    title: 'Ongoing Wellness',
+    description: 'Continue your transformation with post-treatment guidance, dietary recommendations, and regular progress monitoring.',
   },
 ];
 
 const HowItWorksSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            How It Works
+    <section className="section-padding bg-foreground text-background relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }} />
+      </div>
+      
+      <div className="container mx-auto px-6 relative">
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-sm font-medium text-primary uppercase tracking-wider mb-4 block">The Process</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+            Your Path to Wellness
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Your journey to wellness in simple steps
+          <p className="text-lg opacity-70">
+            A structured yet flexible approach to guide you through your healing transformation.
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 max-w-4xl mx-auto">
-          {steps.map((step, index) => (
+        {/* Steps */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {steps.map((item, index) => (
             <div
-              key={step.number}
-              className="flex flex-col items-center text-center animate-slide-up"
+              key={item.step}
+              className="relative group animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl mb-4 shadow-lg">
-                {step.number}
-              </div>
-              <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                {step.title}
-              </h3>
-              <p className="text-sm text-muted-foreground max-w-[200px]">
-                {step.description}
-              </p>
-              
-              {/* Connector line (hidden on mobile and last item) */}
+              {/* Connector Line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute transform translate-x-[120px]">
-                  <div className="w-[60px] h-0.5 bg-border" />
-                </div>
+                <div className="hidden lg:block absolute top-10 left-[60%] w-full h-0.5 bg-background/20" />
               )}
+              
+              {/* Step Number */}
+              <div className="text-6xl font-display font-bold opacity-10 mb-4">
+                {item.step}
+              </div>
+              
+              {/* Icon */}
+              <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/30 transition-colors">
+                <item.icon className="h-7 w-7 text-primary" />
+              </div>
+              
+              {/* Content */}
+              <h3 className="font-display text-xl font-semibold mb-3">
+                {item.title}
+              </h3>
+              <p className="opacity-70 leading-relaxed">
+                {item.description}
+              </p>
             </div>
           ))}
         </div>
