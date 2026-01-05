@@ -1,76 +1,86 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    initials: 'RS',
     name: 'Rajesh Sharma',
-    condition: 'Chronic Pain Patient',
-    quote: "After 3 months of Panchakarma therapy, my chronic back pain has reduced by 80%. The personalized treatment plan was exactly what I needed.",
+    role: 'Chronic Pain Recovery',
+    image: null,
+    quote: "After struggling with chronic back pain for years, I found relief through AyurSutra's Panchakarma program. The personalized approach made all the difference. My pain reduced by 80% in just 3 months.",
     rating: 5,
   },
   {
-    initials: 'PS',
     name: 'Priya Singh',
-    condition: 'Stress Management',
-    quote: "The Shirodhara sessions completely transformed my sleep quality and stress levels. I feel more balanced and energetic than ever before.",
+    role: 'Stress & Anxiety Management',
+    image: null,
+    quote: "The Shirodhara treatments transformed my relationship with sleep and stress. I went from constant anxiety to feeling genuinely peaceful. The practitioners here truly understand holistic healing.",
     rating: 5,
   },
   {
-    initials: 'AK',
-    name: 'Amit Kumar',
-    condition: 'Digestive Health',
-    quote: "My digestive issues that plagued me for years are now completely resolved. The holistic approach here is truly remarkable.",
+    name: 'Dr. Amit Kumar',
+    role: 'Digestive Health',
+    image: null,
+    quote: "As a medical professional myself, I was skeptical at first. But the scientific approach combined with traditional wisdom completely resolved my decade-long digestive issues. Truly remarkable.",
     rating: 5,
   },
 ];
 
 const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            What Our Patients Say
+    <section id="testimonials" className="section-padding bg-background relative">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-sm font-medium text-primary uppercase tracking-wider mb-4 block">Testimonials</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6">
+            Stories of Transformation
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Real stories of transformation and healing
+          <p className="text-lg text-muted-foreground">
+            Real experiences from people whose lives have been transformed through authentic Ayurvedic healing.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* Testimonials Grid */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <Card
+            <div
               key={testimonial.name}
-              className="hover:shadow-lg transition-all duration-300 border-border/50 bg-card animate-slide-up"
+              className="relative p-8 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
-                    {testimonial.initials}
+              {/* Quote Icon */}
+              <div className="absolute -top-4 left-8">
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                  <Quote className="h-5 w-5 text-primary-foreground" />
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div className="flex gap-1 mb-6 pt-4">
+                {Array.from({ length: testimonial.rating }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-accent text-accent" />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="text-foreground leading-relaxed mb-8">
+                "{testimonial.quote}"
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-display font-semibold text-lg">
+                  {testimonial.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div>
+                  <div className="font-display font-semibold text-foreground">
+                    {testimonial.name}
                   </div>
-                  <div>
-                    <h4 className="font-display font-semibold text-foreground">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-xs text-muted-foreground">
-                      {testimonial.condition}
-                    </p>
+                  <div className="text-sm text-muted-foreground">
+                    {testimonial.role}
                   </div>
                 </div>
-                
-                <p className="text-sm text-muted-foreground mb-4 italic">
-                  "{testimonial.quote}"
-                </p>
-                
-                <div className="flex gap-1">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>

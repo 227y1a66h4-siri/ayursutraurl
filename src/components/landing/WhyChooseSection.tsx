@@ -1,74 +1,78 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { Award, Users, Leaf, Activity, Clock, HeartHandshake } from 'lucide-react';
 
 const features = [
   {
-    emoji: '👨‍⚕️',
+    icon: Users,
     title: 'Expert Practitioners',
-    description: 'Certified Ayurvedic doctors with years of specialized Panchakarma training',
+    description: 'Board-certified Ayurvedic doctors with decades of specialized Panchakarma training from renowned institutions.',
   },
   {
-    emoji: '📊',
+    icon: Activity,
     title: 'Progress Tracking',
-    description: 'Advanced wellness analytics to monitor your healing journey',
+    description: 'Advanced wellness analytics and regular assessments to monitor your healing journey with precision.',
   },
   {
-    emoji: '🌿',
+    icon: Leaf,
     title: 'Authentic Treatments',
-    description: 'Traditional methods using pure, organic herbs and oils',
+    description: 'Traditional protocols using ethically-sourced, organic herbs and oils prepared in-house daily.',
   },
   {
-    emoji: '🏥',
+    icon: Award,
     title: 'Modern Facilities',
-    description: 'State-of-the-art treatment rooms with comfortable amenities',
+    description: 'State-of-the-art treatment rooms combining traditional ambiance with contemporary comfort.',
   },
   {
-    emoji: '🤝',
+    icon: HeartHandshake,
     title: 'Personalized Care',
-    description: 'Customized treatment plans tailored to your unique constitution',
+    description: 'Individualized treatment plans crafted after thorough Prakriti (constitution) analysis.',
   },
   {
-    emoji: '💬',
+    icon: Clock,
     title: '24/7 Support',
-    description: 'Round-the-clock assistance through our AI virtual assistant',
+    description: 'Round-the-clock care team and AI-powered wellness assistant for guidance anytime.',
   },
 ];
 
 const WhyChooseSection = () => {
   return (
-    <section id="why-choose" className="py-16 md:py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Why Choose AyurSutra?
+    <section id="why-choose" className="section-padding gradient-warm relative overflow-hidden">
+      {/* Decorative circles */}
+      <div className="absolute top-20 left-10 w-40 h-40 rounded-full border border-primary/10" />
+      <div className="absolute bottom-20 right-10 w-60 h-60 rounded-full border border-secondary/10" />
+      
+      <div className="container mx-auto px-6 relative">
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-sm font-medium text-primary uppercase tracking-wider mb-4 block">Why AyurSutra</span>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6">
+            Where Ancient Wisdom Meets Modern Excellence
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Experience the perfect blend of ancient wisdom and modern technology
+          <p className="text-lg text-muted-foreground">
+            Experience the perfect synthesis of time-tested Ayurvedic principles and contemporary healthcare standards.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map((feature, index) => (
-            <Card
+            <div
               key={feature.title}
-              className="group hover:shadow-md transition-all duration-300 border-border/50 bg-card/50 backdrop-blur-sm animate-slide-up"
+              className="group text-center animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="text-3xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    {feature.emoji}
-                  </div>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              {/* Icon */}
+              <div className="inline-flex w-16 h-16 rounded-2xl bg-card border border-border items-center justify-center mb-6 group-hover:border-primary/30 group-hover:shadow-md transition-all">
+                <feature.icon className="h-8 w-8 text-primary" />
+              </div>
+              
+              {/* Content */}
+              <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>
