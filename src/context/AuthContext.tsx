@@ -40,6 +40,13 @@ const demoUsers: Record<string, User & { password: string }> = {
     role: 'receptionist',
     password: 'receptionist123',
   },
+  'patient@ayursutra.com': {
+    id: '5',
+    email: 'patient@ayursutra.com',
+    name: 'Rajesh Kumar',
+    role: 'patient',
+    password: 'patient123',
+  },
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
