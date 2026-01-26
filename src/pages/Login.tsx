@@ -45,6 +45,7 @@ export default function Login() {
     { role: 'Doctor', email: 'doctor@ayursutra.com', password: 'doctor123' },
     { role: 'Therapist', email: 'therapist@ayursutra.com', password: 'therapist123' },
     { role: 'Receptionist', email: 'receptionist@ayursutra.com', password: 'receptionist123' },
+    { role: 'Patient', email: 'patient@ayursutra.com', password: 'patient123' },
   ];
 
   return (

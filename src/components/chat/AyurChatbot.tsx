@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Loader2, Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import ReactMarkdown from 'react-markdown';
+import { toast } from '@/hooks/use-toast';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -94,6 +96,21 @@ export function AyurChatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const { isListening, isSupported, startListening, stopListening } = useSpeechRecognition({
+    onResult: (transcript) => {
+      setInput(prev => prev + (prev ? ' ' : '') + transcript);
+    },
+    onError: (error) => {
+      toast({
+        title: "Voice input error",
+        description: error === 'not-allowed' 
+          ? "Please allow microphone access to use voice input" 
+          : "Voice recognition failed. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -102,6 +119,11 @@ export function AyurChatbot() {
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
+
+    // Stop listening if active
+    if (isListening) {
+      stopListening();
+    }
 
     const userMsg: Message = { role: 'user', content: input };
     setMessages(prev => [...prev, userMsg]);
@@ -137,6 +159,14 @@ export function AyurChatbot() {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
+    }
+  };
+
+  const handleVoiceToggle = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
     }
   };
 
@@ -215,15 +245,39 @@ export function AyurChatbot() {
 
           {/* Input */}
           <div className="border-t border-border p-4">
+            {/* Voice indicator */}
+            {isListening && (
+              <div className="flex items-center gap-2 mb-2 text-sm text-accent">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                </span>
+                Listening... Speak now
+              </div>
+            )}
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about therapies..."
+                placeholder={isListening ? "Listening..." : "Ask about therapies..."}
                 className="flex-1"
                 disabled={isLoading}
               />
+              {isSupported && (
+                <Button 
+                  onClick={handleVoiceToggle}
+                  size="icon" 
+                  variant={isListening ? "accent" : "outline"}
+                  className={cn(
+                    "shrink-0 transition-all",
+                    isListening && "bg-accent text-accent-foreground animate-pulse"
+                  )}
+                  title={isListening ? "Stop listening" : "Start voice input"}
+                >
+                  {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                </Button>
+              )}
               <Button 
                 onClick={sendMessage} 
                 size="icon" 

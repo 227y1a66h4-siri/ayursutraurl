@@ -14,6 +14,7 @@ import Therapies from "./pages/Therapies";
 import Therapists from "./pages/Therapists";
 import Billing from "./pages/Billing";
 import Settings from "./pages/Settings";
+import MyRecords from "./pages/MyRecords";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/therapists" element={<Therapists />} />
             <Route path="/billing" element={<Billing />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/my-records" element={<MyRecords />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <AyurChatbot />

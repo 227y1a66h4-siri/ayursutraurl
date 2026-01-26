@@ -1,14 +1,26 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Sidebar } from './Sidebar';
 import { useAuth } from '@/context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect patients to their records page if they try to access restricted areas
+    if (user?.role === 'patient') {
+      const restrictedPaths = ['/dashboard', '/patients', '/appointments', '/therapies', '/therapists', '/billing', '/settings'];
+      if (restrictedPaths.includes(location.pathname)) {
+        navigate('/my-records', { replace: true });
+      }
+    }
+  }, [user, location.pathname, navigate]);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

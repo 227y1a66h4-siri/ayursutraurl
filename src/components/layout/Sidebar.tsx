@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['admin', 'doctor', 'therapist', 'receptionist'] },
+  { name: 'My Records', href: '/my-records', icon: Users, roles: ['patient'] },
   { name: 'Patients', href: '/patients', icon: Users, roles: ['admin', 'doctor', 'receptionist'] },
   { name: 'Appointments', href: '/appointments', icon: Calendar, roles: ['admin', 'doctor', 'therapist', 'receptionist'] },
   { name: 'Therapies', href: '/therapies', icon: Stethoscope, roles: ['admin', 'doctor'] },
