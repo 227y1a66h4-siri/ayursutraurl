@@ -1,6 +1,7 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { AppointmentCard } from '@/components/dashboard/AppointmentCard';
+import { TherapyRecommendations } from '@/components/dashboard/TherapyRecommendations';
 import { useAuth } from '@/context/AuthContext';
 import { mockAppointments, mockPatients, mockTherapists, mockInvoices } from '@/data/mockData';
 import { Users, Calendar, IndianRupee, UserCheck, Clock } from 'lucide-react';
@@ -69,6 +70,13 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+
+        {/* AI Therapy Recommendations for Admin/Doctor */}
+        {(user?.role === 'admin' || user?.role === 'doctor') && (
+          <div className="animate-slide-up" style={{ animationDelay: '150ms' }}>
+            <TherapyRecommendations />
+          </div>
+        )}
 
         {/* Main Content */}
         <div className="grid gap-6 lg:grid-cols-3">
