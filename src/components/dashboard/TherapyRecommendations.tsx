@@ -106,12 +106,28 @@ export function TherapyRecommendations() {
         }
       }
 
-      // Parse the JSON response
+      // Parse the JSON response - find the outermost valid JSON object
       const jsonMatch = fullResponse.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0]) as RecommendationResult;
-        setResult(parsed);
+        try {
+          const parsed = JSON.parse(jsonMatch[0]);
+          // Normalize the response to handle variations in field names
+          const normalizedResult: RecommendationResult = {
+            recommendations: (parsed.recommendations || []).map((rec: any) => ({
+              therapyName: rec.therapyName || rec.therapy_name || rec.name || "Unknown Therapy",
+              relevance: (rec.relevance || "medium").toLowerCase() as 'high' | 'medium' | 'low',
+              reason: rec.reason || rec.description || "Recommended based on symptoms",
+              suggestedSessions: rec.suggestedSessions || rec.suggested_sessions || rec.sessions || 3
+            })),
+            generalAdvice: parsed.generalAdvice || parsed.general_advice || parsed.advice || "Follow a balanced Ayurvedic lifestyle with proper diet and rest."
+          };
+          setResult(normalizedResult);
+        } catch (parseError) {
+          console.error("JSON parse error:", parseError, "Response:", fullResponse);
+          throw new Error("Could not parse AI response");
+        }
       } else {
+        console.error("No JSON found in response:", fullResponse);
         throw new Error("Could not parse AI response");
       }
     } catch (err) {
